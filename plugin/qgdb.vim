@@ -12,6 +12,7 @@ let g:sourcew = 0
 let s:dirname = ""
 let s:bplocs = {}
 let s:bpnums = {}
+let g:gdb_prog = "egdb"
 
 command! -nargs=1 Args let s:args = <q-args>
 command! -nargs=1 File let s:file = <q-args>
@@ -47,7 +48,7 @@ func! s:GdbStart()
 		return 0
 	endif
 	let g:sourcew = win_getid()
-	let s:gdb_command = 'egdb -quiet -f'
+	let s:gdb_command = g:gdb_prog . ' -quiet -f'
 	let s:dirname = fnamemodify(expand(s:file), ":h") . '/'
 	if filereadable(s:file)
 		let s:gdb_command = s:gdb_command . ' ' . s:file
