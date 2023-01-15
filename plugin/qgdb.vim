@@ -9,10 +9,14 @@ let s:file_missing = 1
 let s:stopped = 1
 let s:running = 0
 let g:sourcew = 0
+if !exists("g:gdb_sudo")
+	let g:gdb_sudo = 0
+endif
 let s:dirname = ""
 let s:bplocs = {}
 let s:bpnums = {}
 let g:gdb_prog = "egdb"
+let g:sudo_prog = "sudo"
 
 command! -nargs=1 Args let s:args = <q-args>
 command! -nargs=1 File let s:file = <q-args>
@@ -48,7 +52,11 @@ func! s:GdbStart()
 		return 0
 	endif
 	let g:sourcew = win_getid()
-	let s:gdb_command = g:gdb_prog . ' -quiet -f'
+	if g:gdb_sudo != 0
+		let s:gdb_command = G:sudo_prog . ' ' . g:gdb_prog . ' -quiet -f'
+	else
+		let s:gdb_command = g:gdb_prog . ' -quiet -f'
+	endif
 	let s:dirname = fnamemodify(expand(s:file), ":h") . '/'
 	if filereadable(s:file)
 		let s:gdb_command = s:gdb_command . ' ' . s:file
