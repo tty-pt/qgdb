@@ -53,7 +53,7 @@ func! s:GdbStart()
 	endif
 	let g:sourcew = win_getid()
 	if g:gdb_sudo != 0
-		let s:gdb_command = G:sudo_prog . ' ' . g:gdb_prog . ' -quiet -f'
+		let s:gdb_command = g:sudo_prog . ' ' . g:gdb_prog . ' -quiet -f'
 	else
 		let s:gdb_command = g:gdb_prog . ' -quiet -f'
 	endif
