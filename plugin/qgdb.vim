@@ -15,8 +15,17 @@ endif
 let s:dirname = ""
 let s:bplocs = {}
 let s:bpnums = {}
-let g:gdb_prog = "egdb"
-let g:sudo_prog = "sudo"
+let g:os = substitute(system('uname'), '\n', '', '')
+if os == "Linux"
+	let g:gdb_prog = 'gdb'
+else
+	let g:gdb_prog = "egdb"
+endif
+if os == "OpenBSD"
+	let g:sudo_prog = "doas"
+else
+	let g:sudo_prog = "sudo"
+endif
 
 command! -nargs=1 Args let s:args = <q-args>
 command! -nargs=1 File let s:file = <q-args>
